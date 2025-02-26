@@ -303,6 +303,31 @@ Aggregate: playground/tmp/splitted-ab.tsv
 判断の閾値をほんの少しyes側に動かしている。
 割合はその動かす距離と方向を決定している…くらいしか思いつかない。
 
+## 普通の写真に対する効果
+
+25枚の広告とは関係ない一般写真について、ws64での学習前後で推論し評価してみた。
+データとしては全てyesとなるもの。
+
+```console
+./14-validate_outtsv.py ./tmp/out-ws64-t8-r0.001-b8-safe.tsv ./tmp/out-default-safe.tsv
+Aggregate: ./tmp/out-ws64-t8-r0.001-b8-safe.tsv
+  Tp=21 Tn=0 Fp=0 Fn=4
+  accuracy:  0.84
+  precision: 1.0
+  recall:    0.84
+  F-measure: 0.9130434782608696
+Aggregate: ./tmp/out-default-safe.tsv
+  Tp=15 Tn=0 Fp=0 Fn=10
+  accuracy:  0.6
+  precision: 1.0
+  recall:    0.6
+  F-measure: 0.7499999999999999
+```
+
+学習前は40%でnoと返していたのに対し、学習後は16%にまで減じている。
+これはyesを多く返すように学習していることと符合している。
+ただし内容を正しく判断したのだということはできない。
+
 ## ここまでのまとめ (2025-02-19)
 
 * `yes` と答える圧力が強い (全体の85%以上が `yes` であることによる)
